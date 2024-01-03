@@ -1,26 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using MmImageLoading.Cache;
 using System.Reflection;
 using System.ComponentModel;
-using MmImageLoading.MAUI;
 
 namespace MmImageLoading.MAUI
 {
-
-
     /// <summary>
     /// CachedImage by Daniel Luberda
     /// </summary>
     public class CachedImage : View, ICachedImage
     {
-        private ImageSource _loadingPlaceholder;
-        private ImageSource _errorPlaceholder;
-        private ImageSource _source = default(ImageSource);
-
-
 
         #region ICachedImage
 
@@ -31,14 +20,10 @@ namespace MmImageLoading.MAUI
 
         public bool IsOpaque { get; set; }
 
-        //[TypeConverter(typeof(ImageSourceConverter))]
 
-        public static readonly BindableProperty SourceProperty = BindableProperty.Create(nameof(Source), typeof(ImageSource), typeof(CachedImage), default(ImageSource), BindingMode.OneWay, coerceValue: CoerceImageSource, propertyChanged: OnSourcePropertyChanged);
+        public static readonly BindableProperty SourceProperty = BindableProperty.Create(nameof(Source), typeof(ImageSource), 
+            typeof(ICachedImage), coerceValue: CoerceImageSource, propertyChanged: OnSourcePropertyChanged);
 
-        private static object CoerceImageSource(BindableObject bindable, object newValue)
-        {
-            return ((CachedImage)bindable).CoerceImageSource(newValue);
-        }
         [TypeConverter(typeof(ImageSourceConverter))]
         public ImageSource Source
         {
@@ -49,7 +34,7 @@ namespace MmImageLoading.MAUI
         /// <summary>
         /// The loading placeholder property.
         /// </summary>
-        public static readonly BindableProperty LoadingPlaceholderProperty = BindableProperty.Create(nameof(LoadingPlaceholder), typeof(ImageSource), typeof(CachedImage), default(ImageSource), coerceValue: CoerceImageSource);
+        public static readonly BindableProperty LoadingPlaceholderProperty = BindableProperty.Create(nameof(LoadingPlaceholder), typeof(ImageSource), typeof(CachedImage), coerceValue: CoerceImageSource);
 
         /// <summary>
         /// Gets or sets the loading placeholder image.
@@ -64,7 +49,7 @@ namespace MmImageLoading.MAUI
         /// <summary>
         /// The error placeholder property.
         /// </summary>
-        public static readonly BindableProperty ErrorPlaceholderProperty = BindableProperty.Create(nameof(ErrorPlaceholder), typeof(ImageSource), typeof(CachedImage), default(ImageSource), coerceValue: CoerceImageSource);
+        public static readonly BindableProperty ErrorPlaceholderProperty = BindableProperty.Create(nameof(ErrorPlaceholder), typeof(ImageSource), typeof(CachedImage), coerceValue: CoerceImageSource);
 
         /// <summary>
         /// Gets or sets the error placeholder image.
@@ -111,6 +96,11 @@ namespace MmImageLoading.MAUI
         public ICommand FileWriteFinishedCommand { get; set; }
 
         #endregion
+
+        private static object CoerceImageSource(BindableObject bindable, object newValue)
+        {
+            return ((CachedImage)bindable).CoerceImageSource(newValue);
+        }
 
         protected virtual ImageSource CoerceImageSource(object newValue)
         {
@@ -183,9 +173,6 @@ namespace MmImageLoading.MAUI
             }
         }
 
-
-
-
         private static void OnSourcePropertyChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if (!IsRendererInitialized)
@@ -203,11 +190,6 @@ namespace MmImageLoading.MAUI
                 SetInheritedBindingContext(newValue as BindableObject, bindable.BindingContext);
             }
         }
-
-
-
-
-
 
         /// <summary>
         /// The transformations property.
