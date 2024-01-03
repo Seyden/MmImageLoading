@@ -1,10 +1,3 @@
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-# This project will not be maintained anymore
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-we had to make a hard decission and moved away from maui as the efforts where to high to maintian our app
-
-
 # MmImageLoading
 ## MmImageLoading - Mad Maui Image Loading
 
